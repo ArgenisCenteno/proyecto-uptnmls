@@ -41,7 +41,13 @@
     'unidad' => 'Unidad',
 ], null, ['class' => 'form-control round', 'placeholder' => 'Selecciona una unidad de medida', 'required']) !!}
     </div>
-
+    <div class="form-group col-sm-12 col-md-6">
+        {!! Form::label('tipo', 'Tipo:', ['class' => 'bold']) !!}
+        {!! Form::select('tipo', [
+    'CONSUMIBLE' => 'Consumible',
+    'RETORNABLE' => 'Retornable',
+], null, ['class' => 'form-control round', 'placeholder' => 'Selecciona un tipo', 'required']) !!}
+    </div>
 </div>
 
 <!-- Botones de acción -->

@@ -13,9 +13,15 @@
                         <div class="col-md-6 col-6">
                             <h3 class="p-2 bold">Personal</h3>
                         </div>
+                        <div class="col-md-6 col-6">
                         <div class="d-flex justify-content-end mt-3">
                                 <a href="{{route('personal.create')}}" class="btn btn-primary  round mx-1" >Registrar</a>
+                       <!-- Blade View -->
+<a href="{{ route('export.personal') }}" class="btn btn-success">Exportar Personal</a>
+
+                            </div>
                         </div>
+                       
                     </div>
                     <div class="card-body">
                   

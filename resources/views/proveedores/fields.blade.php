@@ -46,7 +46,7 @@
 <!-- Botones de acción -->
 <div class="float-end">
     {!! Form::submit('Guardar', ['class' => 'btn btn-primary round', 'id' => 'submit_btn']) !!}
-    <a href="{{ route('proveedores.index') }}" class="btn btn-danger round">Cancelar</a>
+    <a href="{{ route('entes.index') }}" class="btn btn-danger round">Cancelar</a>
 </div>
 
 <script>

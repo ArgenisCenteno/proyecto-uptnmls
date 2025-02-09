@@ -4,6 +4,7 @@ use App\Http\Controllers\AsignacionController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CajaController;
 use App\Http\Controllers\CompraController;
+use App\Http\Controllers\PersonalController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\SolicitudController;
 use App\Http\Controllers\TramiteController;
@@ -57,7 +58,7 @@ Route::get('/producto/{id}', [VentaController::class, 'obtenerProducto'])->name(
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 /* PROVEEDORES */
-Route::resource('proveedores', App\Http\Controllers\ProveedorController::class);
+Route::resource('entes', App\Http\Controllers\ProveedorController::class);
 
 /* PERSONAL */
 Route::resource('personal', App\Http\Controllers\PersonalController::class);
@@ -76,7 +77,11 @@ Route::post('tramites/export', [TramiteController::class, 'export'])->name('tram
 Route::get('/buscarProductos', [ProductoController::class, 'buscarProducto'])->name('buscarProductos');
 Route::post('solicitudes/export', [SolicitudController::class, 'export'])->name('solicitudes.export');
 Route::post('asignaciones/export', [AsignacionController::class, 'export'])->name('asignaciones.export');
-
+Route::get('/productosPendientes', [ProductoController::class, 'almacen'])->name('inventario');
+Route::get('/productosPendientes', [ProductoController::class, 'productosPendientes'])->name('productosPendientes');
+Route::delete('/eliminarRegistro/{id}', [ProductoController::class, 'eliminarPendiente'])->name('eliminarPendiente');
+Route::get('/exportar-productos-pendientes', [ProductoController::class, 'exportProductosPendientes'])->name('export.productosPendientes');
+ 
 
 /* TASAS, MONEDAS E IMPUESTOS */
 Route::resource('tasas', App\Http\Controllers\TasasController::class);
@@ -87,6 +92,8 @@ Route::resource('compras', App\Http\Controllers\CompraController::class);
 Route::get('/comprar', [CompraController::class, 'comprar'])->name('compras.comprar');
 Route::get('/datatableProductoCompra', [CompraController::class, 'datatableProductoCompras'])->name('compras.datatableProductoCompra');
 Route::post('/generarCompra', [CompraController::class, 'generarCompra'])->name('compras.generarCompra');
+Route::get('/exportar-productos', [ProductoController::class, 'exportProductos'])->name('export.productos');
+Route::get('/exportar-personal', [PersonalController::class, 'exportPersonal'])->name('export.personal');
 
 
 

@@ -15,7 +15,10 @@
                         </div>
                         <div class="d-flex justify-content-end mt-3">
                                 <a href="{{route('productos.create')}}" class="btn btn-primary  round mx-1" >Registrar</a>
-                        </div>
+                       <!-- Blade View -->
+<a href="{{ route('export.productos') }}" class="btn btn-success">Exportar Productos</a>
+
+                            </div>
                     </div>
                     <div class="card-body">
                   

@@ -6,7 +6,7 @@
                 <th>Fecha</th>
                 <th>Descripción</th>
                 <th>Financiamiento</th>
-                <th>Proveedor</th>
+                <th>Ente</th>
                 <th>Creado por</th>
                 <th>Estado</th>
                 <th>Tramite</th>

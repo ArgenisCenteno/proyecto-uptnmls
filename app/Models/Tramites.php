@@ -30,4 +30,9 @@ class Tramites extends Model
     {
         return $this->belongsTo(Personal::class, 'personal_id');
     }
+
+    public function productosPendientes()
+{
+    return $this->hasMany(ProductoPendiente::class, 'tramite_id');
+}
 }

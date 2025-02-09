@@ -11,12 +11,12 @@
                             @include('flash::message')
                         </div>
                         <div class="col-md-6 col-6">
-                            <h3 class="p-2 bold">Editar {{$proveedor->nombre}}</h3>
+                            <h3 class="p-2 bold">Editar  Ente</h3>
                         </div>
                        
                     </div>
                     <div class="card-body">
-                    {!! Form::model($proveedor, ['route' => ['proveedores.update', $proveedor->id], 'method' => 'PUT', 'class' => 'btn-create', 'enctype' => 'multipart/form-data']) !!}
+                    {!! Form::model($proveedor, ['route' => ['entes.update', $proveedor->id], 'method' => 'PUT', 'class' => 'btn-create', 'enctype' => 'multipart/form-data']) !!}
 
                         @include('proveedores.editFields')
                     {!! Form::close() !!}    

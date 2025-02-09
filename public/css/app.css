@@ -1698,3 +1698,7 @@ th{
     background-color: #007999 !important;
     color: black !important;
 }
+
+table{
+    text-align: center;
+}

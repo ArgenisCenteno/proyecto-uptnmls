@@ -19,10 +19,7 @@
             <li class="nav-item d-none d-md-block">
                 <a href="{{route('inventario')}}" class="nav-link {{ Request::is('inventario*') ? 'text-primary' : '' }}">Productos</a>
             </li>
-            <li class="nav-item d-none d-md-block">
-                <a href="{{route('proveedores.index')}}"
-                    class="nav-link {{ Request::is('proveedores*') ? 'text-primary' : '' }}">Proveedores</a>
-            </li>
+          
             <li class="nav-item d-none d-md-block">
                 <a href="{{route('personal.index')}}" class="nav-link {{ Request::is('personal*') ? 'text-primary' : '' }}">Personal</a>
             </li>
@@ -37,6 +34,12 @@
             </li>
             <li class="nav-item d-none d-md-block">
                 <a href="{{route('asignaciones.index')}}" class="nav-link {{ Request::is('asignaciones*') ? 'text-primary' : '' }}">Asignaciones</a>
+            </li>
+            <li class="nav-item d-none d-md-block">
+                <a href="{{route('productosPendientes')}}" class="nav-link {{ Request::is('productosPendientes*') ? 'text-primary' : '' }}">Devoluciones</a>
+            </li>
+            <li class="nav-item d-none d-md-block">
+                <a href="{{route('entes.index')}}" class="nav-link {{ Request::is('entes*') ? 'text-primary' : '' }}">Entes</a>
             </li>
             <li class="nav-item d-none d-md-block">
                 <a href="{{route('usuarios.index')}}" class="nav-link {{ Request::is('usuarios*') ? 'text-primary' : '' }}">Usuarios</a>

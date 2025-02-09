@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\PersonalExport;
 use App\Models\Personal;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Validator;
 use Alert;
@@ -163,5 +165,10 @@ class PersonalController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function exportPersonal()
+    {
+        return Excel::download(new PersonalExport, 'personal_data.xlsx');
     }
 }

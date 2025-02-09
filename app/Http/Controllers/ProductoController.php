@@ -1,15 +1,19 @@
 <?php
 
 namespace App\Http\Controllers;
-
+ 
+use App\Exports\ProductosExport;
+use App\Exports\ProductosPendientesExport;
 use App\Models\ImagenProducto;
 use App\Models\Producto;
+use App\Models\ProductoPendiente;
 use App\Models\SubCategoria;
 use Illuminate\Http\Request;
 use Flash;
 use Alert;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
 
 class ProductoController extends Controller
@@ -74,16 +78,17 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $consulta = Producto::where('nombre', $request->nombre)->exists();
 
-        if($consulta){
+        if ($consulta) {
             Alert::error('¡Error!', 'Ya existe un producto con este nombre')->showConfirmButton('Aceptar', 'rgba(79, 59, 228, 1)');
             return redirect(route('inventario'));
         }
 
         $producto = Producto::create([
             'nombre' => $request->nombre,
+            'tipo' => $request->tipo,
             'descripcion' => $request->descripcion,
             'cantidad' => $request->cantidad,
             'sub_categoria_id' => $request->sub_categoria_id,
@@ -138,6 +143,7 @@ class ProductoController extends Controller
 
         // Actualizar los campos del producto
         $producto->nombre = $request->nombre;
+        $producto->tipo = $request->tipo;
         $producto->descripcion = $request->descripcion;
         $producto->unidad_medida = $request->unidad_medida;
         $producto->cantidad = $request->cantidad;
@@ -153,7 +159,7 @@ class ProductoController extends Controller
     }
 
 
-  
+
 
 
     /**
@@ -185,5 +191,84 @@ class ProductoController extends Controller
             ->get();
 
         return response()->json($contribuyentes);
+    }
+
+    public function productosPendientes(Request $request)
+    {
+        if ($request->ajax()) {
+            $productos = ProductoPendiente::with('productoAsignado.producto')->get();
+
+            return DataTables::of($productos)
+                ->addColumn('nombre_producto', function ($productoPendiente) {
+                    return $productoPendiente->productoAsignado->producto->nombre ?? 'N/A';
+                })
+                ->addColumn('cantidad_asignada', function ($productoPendiente) {
+                    return $productoPendiente->productoAsignado->cantidad ?? 'N/A';
+                })
+                ->addColumn('personal', function ($productoPendiente) {
+                    return $productoPendiente->productoAsignado->asignacion->personal->nombre ?? 'N/A';
+                })
+                ->editColumn('created_at', function ($productoPendiente) {
+                    return $productoPendiente->created_at->format('Y-m-d H:i:s');
+                })
+                ->editColumn('fecha_devolucion', function ($productoPendiente) {
+                    if ($productoPendiente->productoAsignado->estado != 'Devuelto') {
+                        return '<span class="badge bg-primary">Pendiente</span>';
+                    } else {
+                        return $productoPendiente->fecha_entrega;
+                    }
+                })
+                ->editColumn('estado', function ($productoPendiente) {
+                    $estado = $productoPendiente->productoAsignado->estado ?? 'S/D';
+
+                    // Asignar un color según el estado
+                    $color = match ($estado) {
+                        'Pendiente' => 'primary',   // Amarillo
+                        'Devuelto' => 'success',   // Verde
+                        'Cancelado' => 'danger',    // Rojo
+                        default => 'secondary',     // Gris
+                    };
+
+                    return '<span class="badge bg-' . $color . '">' . $estado . '</span>';
+                })
+
+                ->addColumn('unidad_medida', function ($productoPendiente) {
+                    return strtoupper($productoPendiente->productoAsignado->producto->unidad_medida ?? 'N/A');
+                })
+
+                ->addColumn('actions', 'productos.actionsPendientes')
+                ->rawColumns(['fecha_vencimiento', 'disponible', 'actions', 'estado', 'fecha_devolucion'])
+                ->make(true);
+        } else {
+            return view('productos.pendientes');
+        }
+    }
+
+
+    public function eliminarPendiente(Request $request, $id)
+    {
+        $dato = ProductoPendiente::find($id);
+
+        if (!$dato) {
+            Alert::error('¡Error!', 'No existe este registro')->showConfirmButton('Aceptar', 'rgba(79, 59, 228, 1)');
+            return redirect(route('productosPendientes'));
+        }
+
+        $dato->delete();
+        Alert::success('¡Éxito!', 'Registro eliminado exitosamente')->showConfirmButton('Aceptar', 'rgba(79, 59, 228, 1)');
+        return redirect()->route('productosPendientes');
+    }
+
+    public function exportProductosPendientes(Request $request)
+    {
+        $startDate = $request->input('start_date'); // Get start date from request
+        $endDate = $request->input('end_date'); // Get end date from request
+    
+        return Excel::download(new ProductosPendientesExport($startDate, $endDate), 'productos_pendientes.xlsx');
+    }
+
+    public function exportProductos()
+    {
+        return Excel::download(new ProductosExport, 'productos_inventario.xlsx');
     }
 }

@@ -63,7 +63,7 @@ class ProveedorController extends Controller
         if ($existingProveedor) {
             Alert::error('¡Error!', 'Ya existe una proveedor con ese nombre o RIF')->showConfirmButton('Aceptar', 'rgba(79, 59, 228, 1)');
 
-            return redirect()->route('proveedores.index');
+            return redirect()->route('entes.index');
         }
 
         // Crear un nuevo proveedor
@@ -80,7 +80,7 @@ class ProveedorController extends Controller
         // Retornar un mensaje de éxito
         Alert::success('Exito!', 'Registro hecho correctamente')->showConfirmButton('Aceptar', 'rgba(79, 59, 228, 1)');
        
-        return redirect()->route('proveedores.index');
+        return redirect()->route('entes.index');
     }
 
     /**
@@ -126,7 +126,7 @@ class ProveedorController extends Controller
         $proveedor = Proveedor::findOrFail($id);
         if (!$proveedor) {
             Alert::error('¡Error!', 'Proveedor no encontrado')->showConfirmButton('Aceptar', 'rgba(79, 59, 228, 1)');
-            return redirect(route('proveedores.index'));
+            return redirect(route('entes.index'));
         }
     
         // Asignar los valores directamente
@@ -146,7 +146,7 @@ class ProveedorController extends Controller
         Alert::success('Exito!', 'Registro actualizado correctamente')->showConfirmButton('Aceptar', 'rgba(79, 59, 228, 1)');
 
 
-        return redirect()->route('proveedores.index');
+        return redirect()->route('entes.index');
         
     }
 
@@ -160,12 +160,12 @@ class ProveedorController extends Controller
        
 
         if(!$proveedor){
-            Alert::error('¡Error!', 'No existe este proveedor')->showConfirmButton('Aceptar', 'rgba(79, 59, 228, 1)');
-            return redirect(route('proveedores.index'));
+            Alert::error('¡Error!', 'No existe este ente')->showConfirmButton('Aceptar', 'rgba(79, 59, 228, 1)');
+            return redirect(route('entes.index'));
         }
 
         $proveedor->delete();
-        Alert::success('¡Éxito!', 'Proveedor eliminado exitosamente')->showConfirmButton('Aceptar', 'rgba(79, 59, 228, 1)');
-        return redirect()->route('proveedores.index');
+        Alert::success('¡Éxito!', 'Ente eliminado exitosamente')->showConfirmButton('Aceptar', 'rgba(79, 59, 228, 1)');
+        return redirect()->route('entes.index');
     }
 }

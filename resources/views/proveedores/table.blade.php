@@ -30,7 +30,7 @@
             processing: true,
             serverSide: true,
             responsive: true,
-            ajax: "{{ route('proveedores.index') }}", 
+            ajax: "{{ route('entes.index') }}", 
             dataType: 'json',
             type: "POST",
             columns: [

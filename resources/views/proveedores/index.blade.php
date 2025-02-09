@@ -11,10 +11,10 @@
                             @include('flash::message')
                         </div>
                         <div class="col-md-6 col-6">
-                            <h3 class="p-2 bold">Proveedores</h3>
+                            <h3 class="p-2 bold">Entes</h3>
                         </div>
                         <div class="d-flex justify-content-end mt-3">
-                                <a href="{{route('proveedores.create')}}" class="btn btn-primary  round mx-1" >Registrar</a>
+                                <a href="{{route('entes.create')}}" class="btn btn-primary  round mx-1" >Registrar</a>
                         </div>
                     </div>
                     <div class="card-body">

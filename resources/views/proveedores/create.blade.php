@@ -12,11 +12,11 @@
                             @include('flash::message')
                         </div>
                         <div class="col-md-6 col-6">
-                            <h3 class="p-2 bold">Registrar Proveedor</h3>
+                            <h3 class="p-2 bold">Registrar Ente</h3>
                         </div>
                     </div>
                     <div class="card-body">
-                    {!! Form::open(['route' => 'proveedores.store', 'class' => 'btn-create','enctype'=>'multipart/form-data']) !!}
+                    {!! Form::open(['route' => 'entes.store', 'class' => 'btn-create','enctype'=>'multipart/form-data']) !!}
                         @include('proveedores.fields')
                     {!! Form::close() !!}    
                     </div>

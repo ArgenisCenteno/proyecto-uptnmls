@@ -7,6 +7,7 @@ use App\Models\Asignacion;
 use App\Models\Personal;
 use App\Models\Producto;
 use App\Models\ProductoAsignado;
+use App\Models\ProductoPendiente;
 use App\Models\Requerimiento;
 use App\Models\Tramites;
 use Illuminate\Http\Request;
@@ -143,12 +144,28 @@ class AsignacionController extends Controller
                 $productoOrdenado->cantidad = $cantidad;
                 $productoOrdenado->producto_id = $producto ? $producto->id : null; // Maneja caso donde no se encuentra el producto
                 $productoOrdenado->asignacion_id = $solicitud->id;
-
+                $productoOrdenado->estado = "Pendiente";
                 // Guarda la instancia
                 $productoOrdenado->save();
 
-                if($productoOrdenado){
-                    $producto->cantidad -= $cantidad;
+              
+
+                if($producto->tipo == 'RETORNABLE'){
+ 
+                    $tramite = new Tramites();
+                    $tramite->fecha = Carbon::now();
+                    $tramite->tipo = 'DEVOLUCIÓN DE PRODUCTOS';
+                    $tramite->descripcion = '';
+                    $tramite->creado_por = auth()->id();
+                    $tramite->estado = 'pendiente';
+                    $tramite->personal_id = $request->personal;
+                    $tramite->save();
+
+                    $pendiente = new ProductoPendiente();
+                    $pendiente->producto_asignado_id = $productoOrdenado->id;
+                    $pendiente->cantidad = $productoOrdenado->cantidad;
+                    $pendiente->tramite_id = $tramite->id;
+                    $pendiente->save();
                 }
             } else {
                 // If productoData is not an array, output an error
