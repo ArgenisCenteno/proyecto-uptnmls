@@ -135,7 +135,7 @@
                             <path clip-rule="evenodd" fill-rule="evenodd"
                                 d="M12.75 3a.75.75 0 01.75-.75 8.25 8.25 0 018.25 8.25.75.75 0 01-.75.75h-7.5a.75.75 0 01-.75-.75V3z">
                             </path>
-                        </svg> <a href="{{route('proveedores.index')}}"
+                        </svg> <a href="{{route('entes.index')}}"
                             class="small-box-footer link-dark link-underline-opacity-0 link-underline-opacity-50-hover">
                             Detalles <i class="bi bi-link-45deg"></i> </a>
                     </div> <!--end::Small Box Widget 4-->
